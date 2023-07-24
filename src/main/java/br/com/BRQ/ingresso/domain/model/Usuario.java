@@ -1,9 +1,18 @@
 package br.com.BRQ.ingresso.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -15,14 +24,13 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/mm/dd");
-
     @Column(nullable = false)
     private String cpf;
 
     @Column(nullable = false)
     private String email;
 
+    @NotNull
     @Column(nullable = false)
     private String nome;
 
@@ -42,14 +50,27 @@ public class Usuario {
     @Column(nullable = false)
     private Integer sexo;
 
-//    @Column(nullable = false)
-//    private LocalDateTime dataCadastro;
-//
-//    private LocalDateTime dataAtualizacao;
+    @JsonIgnore
+    @CreationTimestamp
+    private LocalDateTime dataCadastro;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id" , nullable = false)
+    @JsonIgnore
+    @UpdateTimestamp
+    private LocalDateTime dataAtualizacao;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+
+////    @JsonIgnore
+//    @Embedded
+//    private Endereco endereco;
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "usuario")
+//    private List<Endereco> enderecos = new ArrayList<>();
+
+
 
 
 }
