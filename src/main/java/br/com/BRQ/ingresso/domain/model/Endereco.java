@@ -3,7 +3,12 @@ package br.com.BRQ.ingresso.domain.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -15,29 +20,25 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String logradouro;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String numero;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String bairro;
 
-    @Column(nullable = false)
+    @NotBlank
     private String cidade;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String estado;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String pais;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String cep;
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
 
 }
